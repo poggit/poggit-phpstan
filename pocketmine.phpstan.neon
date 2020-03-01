@@ -1,0 +1,3 @@
+parameters:
+	autoload_files:
+		- phar:///pocketmine/PocketMine-MP.phar/vendor/autoload.php

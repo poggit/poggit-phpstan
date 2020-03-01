@@ -1,0 +1,9 @@
+includes:
+	- /pocketmine/pocketmine.phpstan.neon
+parameters:
+	level: 5
+	paths:
+		- /source/src
+	autoload_directories:
+		- /source/src
+		- /deps
