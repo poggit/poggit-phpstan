@@ -3,9 +3,20 @@
 
 declare(strict_types=1);
 
-echo "Starting prerequisite checks...\n";
+echo "Extracting plugin from {$_ENV["PLUGIN_FILE"]}...\n";
 
 $source = "/source/";
+
+try{
+	$phar = new Phar("/source/{$_ENV["PLUGIN_FILE"]}");
+	$phar->extractTo("/source/");
+} catch (\Exception $e){
+	echo "[ERROR] -> Failed to extract {$_ENV["PLUGIN_FILE"]}\n\n";
+	echo $e->getMessage();
+	exit(1);
+}
+
+echo "Starting prerequisite checks...\n";
 
 if(is_file($source."plugin.yml")) {
     if(!is_dir($source."src")) {
