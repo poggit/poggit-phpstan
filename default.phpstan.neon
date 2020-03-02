@@ -5,6 +5,5 @@ parameters:
 	paths:
 		- /source/src
 	autoload_directories:
-		- /source/vendor
 		- /source/src
 		- /deps

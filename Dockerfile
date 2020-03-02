@@ -9,7 +9,7 @@ ADD entry.php /usr/bin/entry
 ADD default.phpstan.neon /pocketmine/default.phpstan.neon
 ADD pocketmine.phpstan.neon /pocketmine/pocketmine.phpstan.neon
 RUN mkdir /deps
-RUN mkdir -p /source/vendor
+RUN mkdir /source
 RUN chown 1000:1000 /pocketmine/default.phpstan.neon /pocketmine/pocketmine.phpstan.neon /deps /source -R
 
 USER pocketmine

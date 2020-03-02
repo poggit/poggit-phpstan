@@ -18,6 +18,10 @@ try{
 
 echo "Starting prerequisite checks...\n";
 
+if(is_file($source."phpstan.neon.dist")) $_ENV["PHPSTAN_CONFIG"] = "/source/phpstan.neon.dist";
+
+if(is_file($source."phpstan.neon")) $_ENV["PHPSTAN_CONFIG"] = "/source/phpstan.neon";
+
 if(is_file($source."plugin.yml")) {
     if(!is_dir($source."src")) {
         echo "src not found in '{$source}'. Are the paths set correctly?\n";
