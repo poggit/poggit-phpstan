@@ -11,6 +11,9 @@ ADD pocketmine.phpstan.neon /pocketmine/pocketmine.phpstan.neon
 RUN mkdir /deps
 RUN chown 1000:1000 /pocketmine/default.phpstan.neon /pocketmine/pocketmine.phpstan.neon /deps -R
 
+USER pocketmine
+WORKDIR /source
+
 ENV PHPSTAN_CONFIG /pocketmine/default.phpstan.neon
 ENTRYPOINT ["entry"]
 CMD []

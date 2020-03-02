@@ -3,12 +3,11 @@
 
 declare(strict_types=1);
 
-echo "Running analyzer\n";
+echo "Starting prerequisite checks...\n";
 
 $source = "/source/";
 
 if(is_file($source."plugin.yml")) {
-    echo "Plugin.yml found.\n";
     if(!is_dir($source."src")) {
         echo "src not found in '{$source}'. Are the paths set correctly?\n";
         exit(1);
@@ -44,7 +43,9 @@ if(is_file($source."composer.json")) {
     }
 }
 
-$proc = proc_open("phpstan analyze --error-format=json --no-progress --memory-limit=2G -c {$_ENV["PHPSTAN_CONFIG"]} > test.txt", [["file", "/dev/null", "r"], STDOUT, STDERR], $pipes);
+echo "Starting phpstan...\n";
+
+$proc = proc_open("phpstan analyze --error-format=json --no-progress --memory-limit=2G -c {$_ENV["PHPSTAN_CONFIG"]} > /source/phpstan-results.json", [["file", "/dev/null", "r"], STDOUT, STDERR], $pipes);
 if(is_resource($proc)) {
     $code = proc_close($proc);
     exit($code);
