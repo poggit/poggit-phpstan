@@ -14,6 +14,7 @@
  * 5 - Composer failed.
  * 6 - Analysis failed/found problems.
  * 7 - PHPStan failed to parse the plugin.
+ * 8 - PHPStan failed, unknown cause (error emitted stderr)
  * ---
  * 9 - Unknown error.
  */
@@ -27,7 +28,7 @@ $source = "/source/";
 try{
     $phar = new Phar("/source/{$_ENV["PLUGIN_FILE"]}");
     $phar->extractTo("/source/");
-} catch (\Exception $e){
+} catch (Exception $e){
     echo "[Error] -> Failed to extract {$_ENV["PLUGIN_FILE"]}\n\n";
     echo $e->getMessage();
     exit(3);
@@ -62,7 +63,7 @@ if(is_file($source."plugin.yml")) {
         }
 
         echo "[Info] -> Attempting to download dependency $dep from Poggit...\n";
-        $code = pclose(popen("wget -O /deps/$dep.phar https://poggit.pmmp.io/get/$dep", "r"));
+        $code = pclose(popen("wget -q -O /deps/$dep.phar https://poggit.pmmp.io/get/$dep", "r"));
         if($code !== 0) {
             echo "[Warning] -> Failed to downloading dependency $dep\n";
             // still continue executing
@@ -71,7 +72,7 @@ if(is_file($source."plugin.yml")) {
 }
 
 if(is_file($source."composer.json")) {
-    passthru("composer install --no-suggest --no-progress -n -o", $result);
+    passthru("composer install --no-suggest --no-progress -n -o -q", $result);
     if($result !== 0) {
         echo "[Error] -> Failed to install composer dependencies.\n";
         exit(5);
@@ -80,10 +81,17 @@ if(is_file($source."composer.json")) {
 
 echo "[Info] -> Starting phpstan...\n";
 
-$proc = proc_open("phpstan analyze --error-format=json --no-progress --memory-limit=2G -c {$_ENV["PHPSTAN_CONFIG"]} > /source/phpstan-results.json", [["file", "/dev/null", "r"], STDOUT, STDERR], $pipes);
+$proc = proc_open("phpstan analyze --error-format=json --no-progress --memory-limit=2G -c {$_ENV["PHPSTAN_CONFIG"]} > /source/phpstan-results.json", [0 => ["file", "/dev/null", "r"], 1 => ["pipe", "w"], 2 => ["pipe", "w"]], $pipes);
 if(is_resource($proc)) {
+		$stdout = stream_get_contents($pipes[1]);
+		fclose($pipes[1]);
+		fwrite(STDOUT, $stdout);
+		$stderr = stream_get_contents($pipes[2]); // Go through another pipe so we can catch the data.
+		fclose($pipes[2]);
+		fwrite(STDERR, $stderr); //Pass on back to poggit.
     $code = proc_close($proc);
     if($code === 1){
+    		if($stderr !== "") exit(8);
         echo "[Warning] -> Analysis failed/found problems.";
         exit(6);
     }
