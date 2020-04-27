@@ -34,7 +34,7 @@ try {
     passthru("mv /source/tmpExtractionDir/${folder}{$_ENV["PLUGIN_PATH"]}* /source/");
     rrmdir("/source/tmpExtractionDir");
 } catch (Throwable $e){
-    echo $e->getMessage();
+    fwrite(STDERR,$e->getMessage().PHP_EOL);
     exit(3);
 }
 
@@ -50,7 +50,7 @@ try {
         unlink($phar2->getPath());
     }
 } catch(Throwable $e){
-    echo $e->getMessage();
+    fwrite(STDERR,$e->getMessage().PHP_EOL);
     exit(4);
 }
 
