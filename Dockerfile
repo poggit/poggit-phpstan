@@ -3,7 +3,7 @@ FROM pmmp/pocketmine-mp:latest
 USER root
 RUN wget -qO - https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/bin/composer
-RUN wget -qO /usr/bin/phpstan https://github.com/phpstan/phpstan/releases/download/0.12.18/phpstan.phar
+RUN wget -qO /usr/bin/phpstan https://github.com/phpstan/phpstan/releases/download/0.12.19/phpstan.phar
 RUN chmod o+x /usr/bin/phpstan
 ADD entry.php /usr/bin/entry
 ADD default.phpstan.neon /pocketmine/default.phpstan.neon

@@ -61,18 +61,18 @@ if(is_file("/source/phpstan.neon")) $_ENV["PHPSTAN_CONFIG"] = "/source/phpstan.n
 
 if(is_file("/source/plugin.yml")) {
     if(!is_dir("/source/src")) {
-        echo "[Error] -> src directory not found. Did the container setup correctly ?";
+        fwrite(STDERR, "[Error] -> src directory not found. Did the container setup correctly ?".PHP_EOL);
         exit(3);
     }
 } else {
-    echo "[Error] -> plugin.yml not found. Did the container setup correctly ?";
+    fwrite(STDERR, "[Error] -> plugin.yml not found. Did the container setup correctly ?".PHP_EOL);
     exit(3);
 }
 
 if(is_file("/source/composer.json")) {
     passthru("composer install --no-suggest --no-progress -n -o", $result);
     if($result !== 0) {
-        echo "[Error] -> Failed to install composer dependencies !\n";
+        fwrite(STDERR, "[Error] -> Failed to install composer dependencies !\n".PHP_EOL);
         exit(5);
     }
 }
@@ -95,11 +95,11 @@ if(is_resource($proc)) {
     }
     if($code === 255){
         //Phpstan unable to parse, shouldn't happen...
-        echo "[Error] -> PHPStan (255) - Unable to parse.";
+        fwrite(STDERR, "[Error] -> PHPStan (255) - Unable to parse.".PHP_EOL);
         exit(7);
     }
     if($code !== 0) {
-        echo "[Error] -> Unhandled exit status: $code.";
+        fwrite(STDERR, "[Error] -> Unhandled exit status: $code.".PHP_EOL);
         exit(9);
     }
     echo "[Info] -> No problems found !";
