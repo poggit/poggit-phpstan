@@ -1,6 +1,7 @@
 FROM pmmp/pocketmine-mp:latest
 
 USER root
+RUN apt-get update && apt-get install -y --no-install-recommends git
 RUN wget -qO - https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/bin/composer
 RUN wget -qO /usr/bin/phpstan https://github.com/phpstan/phpstan/releases/download/0.12.19/phpstan.phar
