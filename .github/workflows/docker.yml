@@ -9,6 +9,8 @@ jobs:
     name: Docker update
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout v1
+        uses: actions/checkout@v1
       - name: Run docker action.
         uses: docker/build-push-action@v1
         with:
