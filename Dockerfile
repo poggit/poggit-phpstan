@@ -2,17 +2,11 @@ FROM ubuntu:18.04 as phpBuild
 
 USER root
 
-# Prerequisites
-# Default directorys:
-RUN mkdir /deps
-RUN mkdir /source
 RUN mkdir /php
-
-# Dependencies:
 RUN apt-get update && apt-get install --no-install-recommends -y ca-certificates wget make autoconf automake libtool-bin m4 gzip bzip2 bison g++ git cmake pkg-config re2c
 WORKDIR /php
 RUN wget -q https://raw.githubusercontent.com/pmmp/php-build-scripts/stable/compile.sh
-RUN bash compile.sh -t linux64 -f -u -g -l
+RUN bash compile.sh -t linux64 -f -u -g -l -j
 
 # New slate to lose all unwanted libs (~300mb lost here)
 FROM ubuntu:18.04
