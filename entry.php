@@ -74,10 +74,10 @@ if(!is_dir("src")) {
 	exit(3);
 }
 
-if(is_file("phpstan.neon")) $_ENV["PHPSTAN_CONFIG"] = "phpstan.neon";
-if(is_file("phpstan.neon.dist")) $_ENV["PHPSTAN_CONFIG"] = "phpstan.neon.dist";
-if(is_file("poggit.phpstan.neon")) $_ENV["PHPSTAN_CONFIG"] = "poggit.phpstan.neon";
-if(is_file("poggit.phpstan.neon.dist")) $_ENV["PHPSTAN_CONFIG"] = "poggit.phpstan.neon.dist";
+if(is_file("phpstan.neon")) $PHPSTAN_CONFIG = "phpstan.neon";
+if(is_file("phpstan.neon.dist")) $PHPSTAN_CONFIG = "phpstan.neon.dist";
+if(is_file("poggit.phpstan.neon")) $PHPSTAN_CONFIG = "poggit.phpstan.neon";
+if(is_file("poggit.phpstan.neon.dist")) $PHPSTAN_CONFIG = "poggit.phpstan.neon.dist";
 
 echo "[Info] -> Checking for composer deps...\n";
 
