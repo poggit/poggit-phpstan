@@ -21,8 +21,8 @@ RUN ln -s /usr/php/bin/php /usr/bin/php
 RUN wget -qO - https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/bin/composer
 
-RUN mkdir /deps
 RUN mkdir /source
+RUN mkdir /source/poggit_deps
 
 # Default files:
 ADD entry.php /usr/bin/entry
@@ -32,13 +32,10 @@ ADD default.phpstan.neon /source/default.phpstan.neon
 RUN groupadd -g 1000 client
 RUN useradd -r -m -u 1000 -g client client
 
-RUN chown 1000:1000 /deps /source -R
+RUN chown 1000:1000 /source -R
 
 USER client
 WORKDIR /source
-
-ENV PLUGIN_PATH /
-ENV DEFAULT_PHPSTAN_CONFIG /source/default.phpstan.neon
 
 ENTRYPOINT ["entry"]
 CMD []

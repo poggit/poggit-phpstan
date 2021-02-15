@@ -1,6 +1,7 @@
 parameters:
-	level: 4
+	level: 5
 	paths:
-		- /source/src
-	scanDirectories:
-		- /deps
+		- src
+	excludePaths:
+		analyse:
+			- poggit_deps
