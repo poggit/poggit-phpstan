@@ -30,8 +30,8 @@ try {
     $zip->extractTo("/source/tmpExtractionDir");
     $zip->close();
     @unlink("/source/plugin.zip");
-    $folder = (scandir("/source/tmpExtractionDir/"))[2]; //Thanks github.
-    passthru("mv /source/tmpExtractionDir/${folder}{$_ENV["PLUGIN_PATH"]}* /source/");
+    //$folder = (scandir("/source/tmpExtractionDir/"))[2]; //Thanks github. (Update, github no longer puts content in a sub folder !)
+    passthru("mv /source/tmpExtractionDir{$_ENV["PLUGIN_PATH"]}* /source/");
     rrmdir("/source/tmpExtractionDir");
 } catch (Throwable $e){
     fwrite(STDERR,$e->getMessage().PHP_EOL);
