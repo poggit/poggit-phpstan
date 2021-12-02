@@ -38,7 +38,7 @@ try {
     exit(3);
 }
 
-echo "[Info] -> Extracting dependency's...\n";
+echo "[Info] -> Extracting dependencies...\n";
 
 try {
     $folder = array_slice(scandir("/deps/"), 2);
