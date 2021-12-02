@@ -10,7 +10,7 @@
  * 2 - 'Misuse of shell builtins'.
  * ---
  * 3 - Unable to extract plugin.
- * 4 - Unable to extract dependency's.
+ * 4 - Unable to extract dependencies.
  * 5 - Composer failed.
  * 6 - Analysis failed/found problems.
  * 7 - PHPStan failed to parse the plugin.
