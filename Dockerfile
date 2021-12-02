@@ -17,5 +17,5 @@ WORKDIR /source
 
 ENV PLUGIN_PATH /
 ENV PHPSTAN_CONFIG /pocketmine/default.phpstan.neon
-ENTRYPOINT ["entry"]
+ENTRYPOINT ["php", "-dphar.readonly=0", "/usr/bin/entry"]
 CMD []
