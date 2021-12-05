@@ -70,7 +70,7 @@ if(is_file("/source/plugin.yml")) {
 }
 
 if(is_file("/source/composer.json")) {
-    passthru("composer install --no-suggest --no-progress -n -o", $result);
+    passthru("composer install --no-progress -n -o", $result);
     if($result !== 0) {
         fwrite(STDERR, "[Error] -> Failed to install composer dependencies !\n".PHP_EOL);
         exit(5);
