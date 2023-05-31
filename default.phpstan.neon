@@ -1,6 +1,6 @@
 parameters:
 	level: 4
-	phpVersion: 80000
+	phpVersion: 80100
 	paths:
 		- /source/src
 	scanDirectories:
