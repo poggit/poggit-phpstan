@@ -1,4 +1,5 @@
-FROM pmmp/pocketmine-mp:latest
+ARG PMMP_TAG
+FROM pmmp/pocketmine-mp:${PMMP_TAG}
 
 USER root
 RUN apt-get update && apt-get install -y --no-install-recommends git

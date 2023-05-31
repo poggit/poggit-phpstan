@@ -6,8 +6,12 @@ on:
 
 jobs:
   build:
-    name: Update Docker Hub images
+    name: Update Docker Hub images (PM ${{ matrix.pm-version }})
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        pm-version:
+          - "4"
 
     steps:
       - name: Set up Docker Buildx
@@ -33,7 +37,9 @@ jobs:
           push: true
           context: ./
           tags: |
-            pmmp/poggit-phpstan:${{ steps.tag-name.outputs.TAG_NAME }}
+            pmmp/poggit-phpstan:${{ steps.tag-name.outputs.TAG_NAME }}-pm${{ matrix.pm-version }}
+          build-args: |
+            PMMP_TAG=${{ matrix.pm-version }}
 
       - name: Build image for latest tag
         uses: docker/build-push-action@v4.0.0
@@ -41,4 +47,6 @@ jobs:
           push: true
           context: ./
           tags: |
-            pmmp/poggit-phpstan:latest
+            pmmp/poggit-phpstan:latest-pm${{ matrix.pm-version }}
+          build-args: |
+            PMMP_TAG=${{ matrix.pm-version }}
