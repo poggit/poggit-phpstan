@@ -12,6 +12,7 @@ jobs:
       matrix:
         pm-version:
           - "4"
+          - "5"
 
     steps:
       - name: Set up Docker Buildx
