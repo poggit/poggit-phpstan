@@ -84,7 +84,7 @@ if(is_file("/source/composer.json")) {
 
 echo "[Info] -> Starting phpstan...\n";
 
-$proc = proc_open("phpstan analyze --error-format=json --no-progress --memory-limit=2G -c {$_ENV["PHPSTAN_CONFIG"]} > /source/phpstan-results.json", [0 => ["file", "/dev/null", "r"], 1 => ["pipe", "w"], 2 => ["pipe", "w"]], $pipes);
+$proc = proc_open("phpstan analyze --error-format=json --no-progress --memory-limit=256M -c {$_ENV["PHPSTAN_CONFIG"]} > /source/phpstan-results.json", [0 => ["file", "/dev/null", "r"], 1 => ["pipe", "w"], 2 => ["pipe", "w"]], $pipes);
 if(is_resource($proc)) {
     $stdout = stream_get_contents($pipes[1]);
     fclose($pipes[1]);
