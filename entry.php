@@ -70,6 +70,11 @@ if(is_file("/source/plugin.yml")) {
 }
 
 if(is_file("/source/composer.json")) {
+    if(is_file("/source/composer.lock")){
+        echo "[Info] -> Found composer.lock, removing lock file.\n";
+        unlink("/source/composer.lock");
+    }
+
     passthru("composer install --no-progress -n -o", $result);
     if($result !== 0) {
         fwrite(STDERR, "[Error] -> Failed to install composer dependencies !\n".PHP_EOL);
